@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullStackDG", "FullStackDG\FullStackDG.csproj", "{F90645E3-58D0-4668-984A-F20EEA2490E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F90645E3-58D0-4668-984A-F20EEA2490E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F90645E3-58D0-4668-984A-F20EEA2490E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F90645E3-58D0-4668-984A-F20EEA2490E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F90645E3-58D0-4668-984A-F20EEA2490E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = FullStackDG\FullStackDG.csproj
+	EndGlobalSection
+EndGlobal
