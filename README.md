@@ -12,7 +12,8 @@ Dependencies
 * MongoDB [CSharp Driver](http://docs.mongodb.org/ecosystem/drivers/csharp/)
 * [ServiceStack](http://servicestack.net) 
 
-A few notes:
+Notes
+-----
 * xstyle, dgrid and put-selector dependencies should be located/extracted/symlinked as a sibling to FullStackDG/src
 * dgrid version at the time was 0.3 and was referred to as dgrid-0.3 in the symlink I created as a sibling to FullStackDG/src
 * Dojo is included from CDN 
