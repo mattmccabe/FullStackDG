@@ -62,8 +62,9 @@ namespace FullStackDG
 
 		public object Get(ZipResidents resident)
 		{
-			Console.WriteLine(resident.ZipCode);
-			return "good";
+			MongoCollection zipCollection = MongoDBHelper.GetCollection("fullstackdg", "zips"); 
+			var zipInfo = zipCollection.FindOneByIdAs<ZipCodeInfo>(resident.ZipCode);
+			return zipInfo.Residents;
 		}
 
 
@@ -72,34 +73,16 @@ namespace FullStackDG
 			Console.WriteLine(resident.ZipCode);
 			MongoCollection zipCollection = MongoDBHelper.GetCollection("fullstackdg", "zips"); 
 			var zipInfo = zipCollection.FindOneByIdAs<ZipCodeInfo>(resident.ZipCode);
-			/*if(zipInfo.Residents == null)
+
+			if(zipInfo.Residents == null)
 			{
 				zipInfo.Residents = new List<Resident>();
 			}
 			zipInfo.Residents.Add(new Resident {Name=resident.Name, Title=resident.Title});
-*/
 			zipCollection.Save(zipInfo);
 
 		}
 
-
-		/*
-		public List<ZipCodeInfo> Get(ZipsRest zipCode)
-		{
-			//var range = base.Request.Headers["Range"];
-			MongoCollection zipCollection = MongoDBHelper.GetCollection("fullstackdg", "zips"); 
-			var cursor = zipCollection.FindAllAs<ZipCodeInfo>();
-			cursor.Skip = 600;
-			cursor.Limit = 100;
-			
-			List<ZipCodeInfo> zips = new List<ZipCodeInfo>();
-			foreach (var item in cursor) {
-				zips.Add(item);
-			}
-			
-			return zips;
-		}
-		*/
 
 	}
 }

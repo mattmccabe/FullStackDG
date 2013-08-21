@@ -60,21 +60,20 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="web.config" />
-    <Content Include="Default.aspx" />
+    <Content Include="grid1.html" />
+    <Content Include="grid2.html" />
+    <Content Include="grid3.html" />
+    <Content Include="index.html" />
+    <Content Include="src\Grid1.js" />
+    <Content Include="src\Grid2.js" />
+    <Content Include="src\Grid3.js" />
+    <Content Include="src\ZipStore.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\StateInfo.cs" />
     <Compile Include="Models\ZipCodeInfo.cs" />
-    <Compile Include="Services\StateService.cs" />
     <Compile Include="Services\ZipCodeService.cs" />
     <Compile Include="MongoDBHelper.cs" />
   </ItemGroup>

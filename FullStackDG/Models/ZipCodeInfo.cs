@@ -45,7 +45,7 @@ namespace FullStackDG
 			set;
 		}
 
-		/*
+
 		[BsonElement("residents")]
 		[BsonIgnoreIfNull]
 		public List<Resident> Residents
@@ -53,7 +53,6 @@ namespace FullStackDG
 			get;
 			set;
 		}
-		*/
 
 		[BsonExtraElements]
 		public Dictionary<string, object> ExtraStuff {get;set;}
