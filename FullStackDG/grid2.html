@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<title>Grid 2</title>
+	<script type="text/javascript">
+            dojoConfig = {
+                parseOnLoad: false,
+                tlmSiblingOfDojo: true,
+                packages: [
+                           { name: "fullstack", location: location.pathname.replace(/\/[^/]+$/, '') + "/src/"},
+                           { name: "dgrid", location: location.pathname.replace(/\/[^/]+$/, '') + "/../dgrid-0.3"},
+                           { name: "put-selector", location: location.pathname.replace(/\/[^/]+$/, '') + "/../put-selector"},
+                           { name: "xstyle", location: location.pathname.replace(/\/[^/]+$/, '') + "/../xstyle"}
+                           ]
+            };
+            
+            </script>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script> 
+        
+        
+        <script>
+        	require([
+        		"fullstack/Grid2"
+        		, "dojo/on"],
+        		function(Grid, on)
+        		{
+					var totalPop = 0, columns = [
+				      {
+				          label: "State",
+				          field: "StateAbbr"
+				      },
+				      {
+				          label: "ZipCode",
+				          field: "Zip"
+				      },
+				      {
+				          label: "Population",
+				          field: "pop"
+				      }];
+
+				    var data = [
+				    	{StateAbbr:'IA', Zip:'52641', pop:34568},
+				    	{StateAbbr:'IA', Zip:'52601', pop:75568},
+				    	{StateAbbr:'IA', Zip:'52498', pop:368},
+				    	{StateAbbr:'IA', Zip:'53082', pop:100368},
+				    	{StateAbbr:'IA', Zip:'52632', pop:55988},
+				    	{StateAbbr:'MN', Zip:'55078', pop:72987},
+				    	{StateAbbr:'MN', Zip:'55678', pop:9876},
+				    	{StateAbbr:'MN', Zip:'55989', pop:15600},
+				    	{StateAbbr:'MN', Zip:'56780', pop:72987},
+				    	{StateAbbr:'OR', Zip:'90076', pop:9876},
+				    	{StateAbbr:'OR', Zip:'90078', pop:15600},
+				    	{StateAbbr:'AZ', Zip:'85086', pop:34568},
+				    	{StateAbbr:'AZ', Zip:'85086', pop:75568},
+				    	{StateAbbr:'AZ', Zip:'85086', pop:368},
+				    	{StateAbbr:'AZ', Zip:'85022', pop:100368},
+				    	{StateAbbr:'AZ', Zip:'85090', pop:55988},
+				    	{StateAbbr:'AZ', Zip:'85016', pop:72987},
+				    	{StateAbbr:'AZ', Zip:'85010', pop:9876},
+				    	{StateAbbr:'AZ', Zip:'85065', pop:15600}];
+
+        			var grid = new Grid({columns:columns}, "content");
+        			grid.renderArray(data);	
+
+        			grid.on("dgrid-select", function(event)
+        			{
+        				event.rows.forEach(function(row){totalPop += row.data.pop;});
+        				dojo.byId("totalPop").innerHTML = String(totalPop);
+        			});
+
+        			grid.on("dgrid-deselect", function(event)
+        			{	
+        				event.rows.forEach(function(row){totalPop -= row.data.pop;});
+        				dojo.byId("totalPop").innerHTML = String(totalPop);
+        			});
+
+        			function modeClickHandler(mode){
+        				return function()
+        				{
+        					grid.selectionMode = mode;
+        				}
+        			}
+        			
+        			dojo.byId("extendedMode").onclick = modeClickHandler("extended");
+        			dojo.byId("multipleMode").onclick = modeClickHandler("multiple");
+        			dojo.byId("singleMode").onclick = modeClickHandler("single");
+        			dojo.byId("toggleMode").onclick = modeClickHandler("toggle");
+        			dojo.byId("noneMode").onclick = modeClickHandler("none");
+
+        		}
+
+
+        		);
+        </script>
+</head>
+<body>
+	<h2>Selection Mode</h2>
+	<label><input id="extendedMode" type="radio" value="extended" name="mode" checked />Extended</label><br/>
+	<label><input id="multipleMode" type="radio" value="multiple" name="mode"/>Multiple</label><br/>
+	<label><input id="singleMode" type="radio" value="single" name="mode"/>Single</label><br/>
+	<label><input id="toggleMode" type="radio" value="toggle" name="mode"/>Toggle</label><br/>
+	<label><input id="noneMode" type="radio" value="none" name="mode"/>None</label><br/>
+	<div id="content"></div>
+	<label>Total Selected Population: <strong><span id="totalPop">0</span></strong></label><br/>
+	
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<title>Grid 1</title>
+	<script type="text/javascript">
+            dojoConfig = {
+                parseOnLoad: false,
+                tlmSiblingOfDojo: true,
+                packages: [
+                           { name: "fullstack", location: location.pathname.replace(/\/[^/]+$/, '') + "/src/"},
+                           { name: "dgrid", location: location.pathname.replace(/\/[^/]+$/, '') + "/../dgrid-0.3"},
+                           { name: "put-selector", location: location.pathname.replace(/\/[^/]+$/, '') + "/../put-selector"},
+                           { name: "xstyle", location: location.pathname.replace(/\/[^/]+$/, '') + "/../xstyle"}
+                           ]
+            };
+            
+            </script>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script> 
+        
+        
+        <script>
+        	require([
+        		"fullstack/Grid1"],
+        		function(Grid)
+        		{
+					var columns = [
+				      {
+				          label: "State",
+				          field: "StateAbbr"
+				      },
+				      {
+				          label: "ZipCode",
+				          field: "Zip"
+				      },
+				      {
+				          label: "Population",
+				          field: "pop"
+				      }];
+
+				    var data = [
+				    	{StateAbbr:'AZ', Zip:'85086', pop:34568},
+				    	{StateAbbr:'AZ', Zip:'85086', pop:75568},
+				    	{StateAbbr:'AZ', Zip:'85086', pop:368},
+				    	{StateAbbr:'AZ', Zip:'85022', pop:100368},
+				    	{StateAbbr:'AZ', Zip:'85090', pop:55988},
+				    	{StateAbbr:'AZ', Zip:'85016', pop:72987},
+				    	{StateAbbr:'AZ', Zip:'85010', pop:9876},
+				    	{StateAbbr:'AZ', Zip:'85065', pop:15600}];
+
+        			var grid = new Grid({columns:columns}, "content");
+        			grid.renderArray(data);	
+        		}
+
+        		);
+        </script>
+</head>
+<body>
+	<div id="content"></div>
+</body>
+</html>

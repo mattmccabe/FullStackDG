@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<title>On Demand Grid</title>
+	<script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjKTF-cCOlUnjOVI236pduIsh0gQ9uR5A&sensor=true">
+    </script>
+	<script type="text/javascript">
+            dojoConfig = {
+                parseOnLoad: false,
+                tlmSiblingOfDojo: true,
+                packages: [
+                           { name: "fullstack", location: location.pathname.replace(/\/[^/]+$/, '') + "/src/"},
+                           { name: "dgrid", location: location.pathname.replace(/\/[^/]+$/, '') + "/../dgrid-0.3"},
+                           { name: "put-selector", location: location.pathname.replace(/\/[^/]+$/, '') + "/../put-selector"},
+                           { name: "xstyle", location: location.pathname.replace(/\/[^/]+$/, '') + "/../xstyle"}
+                           ]
+            };
+            
+            </script>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script> 
+        
+        <script>
+        	require([
+        		"fullstack/Grid3"
+        		, "dojo/on"
+        		, "dojo/store/JsonRest"
+        		, "dojo/number"
+        		, "put-selector/put"
+        		, "dojo/dom-construct"],
+        		function(Grid, on, JsonRest, number, put, domConstruct)
+        		{
+        			var mapOptions = {
+			          center: new google.maps.LatLng(-34.397, 150.644),
+			          zoom: 8,
+			          mapTypeId: google.maps.MapTypeId.ROADMAP
+			        };
+			        var map = new google.maps.Map(document.getElementById("map"),
+			            mapOptions);
+
+					var totalPop = 0, columns = [
+				      {
+				          label: "State",
+				          field: "StateAbbr"
+				      },
+				      {
+				          label: "City",
+				          field: "City"
+				      },
+				      {
+				          label: "Zip",
+				          field: "ZipCode"
+				      },
+				      {
+				          label: "How Many People",
+				          field: "Population",
+				          formatter: function(value){
+				          	return number.format(value);	
+				          }
+
+				      }];
+
+				    var zipStore = new JsonRest({target:"/zips",idProperty:"ZipCode"});
+
+        			var grid = new Grid({columns:columns, store:zipStore, selectionMode:"single"}, "content");
+        			
+        			var mapNode;
+
+        			grid.on("dgrid-select", function(event)
+        			{
+        				if(event.rows.length == 1)
+        				{
+        					var latlong = event.rows[0].data.Location;
+        					var latitude = latlong[1];
+        					var longitude = latlong[0];
+        					var center = new google.maps.LatLng(latitude, longitude)
+        					map.setCenter(center);
+        					domConstruct.place(dojo.byId("map"), event.rows[0].element, 'after')
+        				}
+        			});
+
+        			function configure(minRows){
+        				return function()
+        				{
+        					grid.minRowsPage = minRows;
+        				}
+        			}
+        			
+        			var minRowsInput = dojo.byId("minRowsPage");
+
+        			dojo.byId("doIt").onclick = configure(minRowsInput.value);
+
+        			
+			        
+
+			       });
+        </script>
+</head>
+<body>
+	<h2>On Demand Settings</h2>
+	<label>minRowsPage<input id="minRowsPage" type="text" value="25" /></label><br/>
+	<input id="doIt" type="button" value="Do It"/>
+	<div id="content" style="height:600px;"></div>
+	<label>Total Selected Population: <strong><span id="totalPop">0</span></strong></label><br/>
+	<div id="map" style="width:100%;height:200px;"></div>
+</body>
+</html>
